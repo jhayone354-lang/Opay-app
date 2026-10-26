@@ -66,17 +66,10 @@
     <!-- Container / Mobile Viewport Frame -->
     <div class="w-full max-w-md bg-opay-bg min-h-screen sm:min-h-[844px] sm:h-[844px] sm:rounded-[40px] shadow-2xl overflow-hidden flex flex-col relative border border-gray-800">
         
-        <!-- Status Bar Fake Spacer for Native Look -->
-        <div class="pt-3 px-6 pb-2 flex justify-between items-center text-xs font-semibold text-gray-300 shrink-0 z-30">
-            <span>9:41</span>
-            <div class="flex items-center space-x-2">
-                <i class="fa-solid fa-signal"></i>
-                <i class="fa-solid fa-wifi"></i>
-                <i class="fa-solid fa-battery-full text-sm"></i>
-            </div>
-        </div>
+        <!-- Status Bar Spacer (Icons & Time Removed) -->
+        <div class="pt-3 px-6 pb-2 shrink-0 z-30"></div>
 
-        <!-- LOGIN SCREEN SCREEN -->
+        <!-- LOGIN SCREEN -->
         <div id="loginScreen" class="flex-1 flex flex-col justify-between px-6 pb-8 pt-4 z-20 bg-opay-bg">
             <div>
                 <!-- OPay Brand Header -->
@@ -110,7 +103,7 @@
                     <div>
                         <label class="block text-xs font-semibold text-gray-300 mb-1.5">Password</label>
                         <div class="relative flex items-center">
-                            <input type="password" id="loginPassword" value="926081" required 
+                            <input type="password" id="loginPassword" value="" placeholder="Enter your password" required 
                                    class="w-full bg-opay-card border border-gray-700 rounded-xl pl-4 pr-11 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-opay-green font-mono tracking-wider">
                             <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3.5 text-gray-400 hover:text-white">
                                 <i id="loginPassEye" class="fa-solid fa-eye text-sm"></i>
@@ -554,7 +547,7 @@
     <script>
         // Core Credentials & State
         const VALID_PHONE = '07073784133';
-        const VALID_PASS = '926081';
+        const VALID_PASS = '9260';
 
         let currentBalance = 2273288.00;
         let isBalanceVisible = true;
@@ -591,7 +584,7 @@
                 } else if (cleanedPhone !== VALID_PHONE) {
                     errorMsg.textContent = 'Incorrect mobile number';
                 } else {
-                    errorMsg.textContent = 'Incorrect password. Try 926081';
+                    errorMsg.textContent = 'Incorrect password. Try 9260';
                 }
             }
         }
@@ -742,7 +735,7 @@
                 // Reset Form & Close Transfer Modal
                 document.getElementById('transferForm').reset();
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span>Confirm & Send</span><i class="fa-solid fa-arrow-right"></i>';
+                submitBtn.innerHTML = '<span>Confirm & Send</span><i class="fa-solid fa-[#000]"></i>';
                 closeTransferModal();
 
                 // Open Receipt Modal
