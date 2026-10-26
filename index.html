@@ -66,11 +66,83 @@
     <!-- Container / Mobile Viewport Frame -->
     <div class="w-full max-w-md bg-opay-bg min-h-screen sm:min-h-[844px] sm:h-[844px] sm:rounded-[40px] shadow-2xl overflow-hidden flex flex-col relative border border-gray-800">
         
-        <!-- Scrollable Screen Content -->
-        <div id="homeScreen" class="flex-1 overflow-y-auto px-4 pb-24 pt-4 hide-scrollbar">
+        <!-- Status Bar Fake Spacer for Native Look -->
+        <div class="pt-3 px-6 pb-2 flex justify-between items-center text-xs font-semibold text-gray-300 shrink-0 z-30">
+            <span>9:41</span>
+            <div class="flex items-center space-x-2">
+                <i class="fa-solid fa-signal"></i>
+                <i class="fa-solid fa-wifi"></i>
+                <i class="fa-solid fa-battery-full text-sm"></i>
+            </div>
+        </div>
+
+        <!-- LOGIN SCREEN SCREEN -->
+        <div id="loginScreen" class="flex-1 flex flex-col justify-between px-6 pb-8 pt-4 z-20 bg-opay-bg">
+            <div>
+                <!-- OPay Brand Header -->
+                <div class="flex flex-col items-center mt-6 mb-8 text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-opay-green/20 border border-opay-green/40 flex items-center justify-center text-opay-green text-3xl font-extrabold shadow-lg shadow-opay-green/10 mb-3">
+                        O
+                    </div>
+                    <h1 class="text-2xl font-extrabold text-white tracking-wide">Welcome Back</h1>
+                    <p class="text-xs text-gray-400 mt-1">Sign in to your OPay account</p>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
+                    <!-- Error Box -->
+                    <div id="loginError" class="hidden bg-red-500/10 border border-red-500/30 text-red-400 text-xs p-3 rounded-xl flex items-center space-x-2">
+                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <span id="loginErrorMsg">Invalid mobile number or password</span>
+                    </div>
+
+                    <!-- Phone Input -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1.5">Mobile Number</label>
+                        <div class="relative flex items-center">
+                            <span class="absolute left-3.5 text-xs font-bold text-opay-green border-r border-gray-700 pr-2.5">+234</span>
+                            <input type="tel" id="loginPhone" value="07073784133" required 
+                                   class="w-full bg-opay-card border border-gray-700 rounded-xl pl-20 pr-4 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-opay-green font-mono tracking-wide">
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div>
+                        <label class="block text-xs font-semibold text-gray-300 mb-1.5">Password</label>
+                        <div class="relative flex items-center">
+                            <input type="password" id="loginPassword" value="926081" required 
+                                   class="w-full bg-opay-card border border-gray-700 rounded-xl pl-4 pr-11 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-opay-green font-mono tracking-wider">
+                            <button type="button" onclick="togglePasswordVisibility()" class="absolute right-3.5 text-gray-400 hover:text-white">
+                                <i id="loginPassEye" class="fa-solid fa-eye text-sm"></i>
+                            </button>
+                        </div>
+                        <div class="flex justify-end mt-1.5">
+                            <button type="button" onclick="showToast('Password reset link sent to mobile')" class="text-[11px] text-opay-green font-medium hover:underline">Forgot password?</button>
+                        </div>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" id="loginBtn" class="w-full bg-opay-green hover:bg-opay-darkGreen text-black font-extrabold py-4 rounded-xl shadow-lg shadow-opay-green/20 transition flex items-center justify-center space-x-2 mt-4 text-sm tracking-wide">
+                        <span>Log In</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Footer / Security Info -->
+            <div class="text-center space-y-3">
+                <div class="flex items-center justify-center space-x-1.5 text-[11px] text-gray-400">
+                    <i class="fa-solid fa-shield-halved text-opay-green"></i>
+                    <span>Licensed by CBN and insured by NDIC</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrollable Screen Content (DASHBOARD) -->
+        <div id="dashboardScreen" class="hidden flex-1 overflow-y-auto px-4 pb-24 hide-scrollbar">
             
             <!-- Header Section -->
-            <div class="flex items-center justify-between py-2">
+            <div class="flex items-center justify-between py-3">
                 <!-- User Profile & Name -->
                 <div class="flex items-center space-x-3">
                     <div class="relative">
@@ -92,16 +164,16 @@
                 <!-- Top Right Icons -->
                 <div class="flex items-center space-x-3">
                     <!-- Help -->
-                    <button onclick="showToast('OPay Support Desk')" class="relative bg-opay-card p-2.5 rounded-full text-gray-300 hover:text-white transition" title="Help">
+                    <button class="relative bg-opay-card p-2.5 rounded-full text-gray-300 hover:text-white transition" title="Help">
                         <i class="fa-regular fa-headset text-base"></i>
                         <span class="absolute -top-1 -right-1 bg-red-500 text-[9px] text-white font-bold px-1 rounded-full">HELP</span>
                     </button>
                     <!-- QR Scanner -->
-                    <button onclick="showToast('QR Code Scanner')" class="bg-opay-card p-2.5 rounded-full text-gray-300 hover:text-white transition" title="Scan QR">
+                    <button class="bg-opay-card p-2.5 rounded-full text-gray-300 hover:text-white transition" title="Scan QR">
                         <i class="fa-solid fa-qrcode text-base"></i>
                     </button>
                     <!-- Notification Bell -->
-                    <button onclick="showToast('No new notifications')" class="relative bg-opay-card p-2.5 rounded-full text-gray-300 hover:text-white transition" title="Notifications">
+                    <button class="relative bg-opay-card p-2.5 rounded-full text-gray-300 hover:text-white transition" title="Notifications">
                         <i class="fa-regular fa-bell text-base"></i>
                         <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-opay-bg"></span>
                     </button>
@@ -281,153 +353,17 @@
             </div>
         </div>
 
-        <!-- CARDS SCREEN (Toggled via Cards Navigation Tab) -->
-        <div id="cardsScreen" class="hidden flex-1 overflow-y-auto px-4 pb-24 pt-4 hide-scrollbar">
-            <!-- Screen Header -->
-            <div class="flex items-center justify-between pb-3 border-b border-gray-800">
-                <div class="flex items-center space-x-2">
-                    <button onclick="switchTab('home')" class="text-gray-400 hover:text-white mr-1">
-                        <i class="fa-solid fa-arrow-left text-sm"></i>
-                    </button>
-                    <h2 class="text-base font-bold text-white">My OPay Cards</h2>
-                </div>
-                <button onclick="showToast('Apply for New Card')" class="text-xs text-opay-green font-bold hover:underline">
-                    + Apply Card
-                </button>
-            </div>
-
-            <!-- Card Type Selector Tabs -->
-            <div class="mt-4 flex bg-opay-card p-1 rounded-xl">
-                <button id="virtualCardTab" onclick="selectCardType('virtual')" class="flex-1 py-2 text-xs font-bold rounded-lg bg-opay-green text-black transition">
-                    Virtual Card
-                </button>
-                <button id="physicalCardTab" onclick="selectCardType('physical')" class="flex-1 py-2 text-xs font-bold rounded-lg text-gray-400 hover:text-white transition">
-                    Physical Debit Card
-                </button>
-            </div>
-
-            <!-- Virtual Card Preview Graphic -->
-            <div class="mt-4 relative bg-gradient-to-br from-gray-900 via-emerald-950 to-black rounded-2xl p-5 border border-opay-green/40 shadow-2xl overflow-hidden">
-                <!-- Glowing accent -->
-                <div class="absolute -top-10 -right-10 w-36 h-36 bg-opay-green/20 rounded-full blur-2xl pointer-events-none"></div>
-
-                <div class="flex justify-between items-center mb-6">
-                    <div class="flex items-center space-x-2">
-                        <span class="text-sm font-extrabold text-opay-green tracking-wider">OPay</span>
-                        <span class="text-[10px] bg-opay-green/20 text-opay-green border border-opay-green/30 px-2 py-0.5 rounded-full font-bold">VIRTUAL</span>
-                    </div>
-                    <i class="fa-solid fa-wifi text-gray-400 rotate-90 text-sm"></i>
-                </div>
-
-                <!-- Card Number -->
-                <div class="mb-4">
-                    <span class="text-[10px] text-gray-400 block mb-0.5 uppercase tracking-widest">Card Number</span>
-                    <div class="flex justify-between items-center font-mono text-lg font-bold tracking-wider text-white">
-                        <span>5399</span>
-                        <span>••••</span>
-                        <span>••••</span>
-                        <span id="cardLastFour">8842</span>
-                    </div>
-                </div>
-
-                <!-- Card Details Row -->
-                <div class="flex justify-between items-end">
-                    <div>
-                        <span class="text-[9px] text-gray-400 block uppercase tracking-widest">Card Holder</span>
-                        <span class="text-xs font-bold text-white tracking-wide">LINDSEY PELLAS</span>
-                    </div>
-                    <div>
-                        <span class="text-[9px] text-gray-400 block uppercase tracking-widest">EXPIRES</span>
-                        <span class="text-xs font-mono font-bold text-white">08/29</span>
-                    </div>
-                    <!-- Card Brand -->
-                    <div class="text-right">
-                        <span class="text-xs font-extrabold tracking-widest italic text-amber-400">Verve</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Card Controls & Actions Grid -->
-            <div class="mt-5 space-y-3">
-                <!-- Manage Card Features -->
-                <div class="bg-opay-card rounded-2xl p-4 space-y-4">
-                    <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider">Card Settings</h3>
-                    
-                    <!-- Reveal Details -->
-                    <div class="flex justify-between items-center text-xs">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-opay-cardLight flex items-center justify-center text-opay-green">
-                                <i class="fa-solid fa-eye"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-white">Show Details & CVV</p>
-                                <p class="text-[10px] text-gray-400">Tap to reveal full card credentials</p>
-                            </div>
-                        </div>
-                        <button onclick="toggleCardCVV()" id="cvvToggleBtn" class="bg-opay-cardLight text-opay-green px-3 py-1.5 rounded-lg font-semibold text-xs border border-opay-green/30 hover:bg-opay-green hover:text-black transition">
-                            Show CVV
-                        </button>
-                    </div>
-
-                    <!-- Freeze Card Switch -->
-                    <div class="flex justify-between items-center text-xs pt-2 border-t border-gray-800">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-opay-cardLight flex items-center justify-center text-amber-400">
-                                <i class="fa-solid fa-snowflake"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-white">Freeze Card</p>
-                                <p class="text-[10px] text-gray-400">Temporarily disable transactions</p>
-                            </div>
-                        </div>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" onchange="showToast(this.checked ? 'Card frozen' : 'Card activated')" class="sr-only peer">
-                            <div class="w-9 h-5 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-opay-green"></div>
-                        </label>
-                    </div>
-
-                    <!-- Change PIN -->
-                    <div class="flex justify-between items-center text-xs pt-2 border-t border-gray-800">
-                        <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 rounded-full bg-opay-cardLight flex items-center justify-center text-blue-400">
-                                <i class="fa-solid fa-lock"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-white">Reset Card PIN</p>
-                                <p class="text-[10px] text-gray-400">Update 4-digit transaction PIN</p>
-                            </div>
-                        </div>
-                        <button onclick="showToast('PIN reset link sent to registered email')" class="text-xs text-gray-400 hover:text-white">
-                            <i class="fa-solid fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Card Limits Card -->
-                <div class="bg-opay-card rounded-2xl p-4 text-xs">
-                    <div class="flex justify-between items-center mb-2">
-                        <span class="font-bold text-white">Daily Spending Limit</span>
-                        <span class="text-opay-green font-mono font-bold">₦5,000,000.00</span>
-                    </div>
-                    <div class="w-full bg-gray-800 h-2 rounded-full overflow-hidden">
-                        <div class="bg-opay-green h-full w-[25%] rounded-full"></div>
-                    </div>
-                    <p class="text-[10px] text-gray-400 mt-2">Remaining daily limit: ₦3,726,712.00</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Floating Security Badge -->
-        <div class="absolute bottom-16 right-4 z-10 pointer-events-auto">
+        <!-- Floating Security Badge (Only visible on Dashboard) -->
+        <div id="dashboardSecurityBadge" class="hidden absolute bottom-16 right-4 z-10 pointer-events-auto">
             <button onclick="showToast('OPay Account Secured with CBN License & NDIC Insurance')" class="bg-emerald-900/90 backdrop-blur text-opay-green border border-opay-green/30 px-3 py-1.5 rounded-full shadow-lg flex items-center space-x-1.5 text-xs font-semibold animate-pulse">
                 <i class="fa-solid fa-shield-halved"></i>
                 <span>Security Verified</span>
             </button>
         </div>
 
-        <!-- Bottom Navigation Bar -->
-        <div class="absolute bottom-0 left-0 right-0 bg-opay-card border-t border-gray-800/80 px-4 py-2 flex justify-around items-center z-20">
-            <button id="navHomeBtn" onclick="switchTab('home')" class="flex flex-col items-center text-opay-green transition">
+        <!-- Bottom Navigation Bar (Only visible on Dashboard) -->
+        <div id="dashboardBottomNav" class="hidden absolute bottom-0 left-0 right-0 bg-opay-card border-t border-gray-800/80 px-4 py-2 flex justify-around items-center z-20">
+            <button class="flex flex-col items-center text-opay-green">
                 <i class="fa-solid fa-compass text-lg"></i>
                 <span class="text-[10px] font-bold mt-0.5">Home</span>
             </button>
@@ -439,7 +375,7 @@
                 <i class="fa-solid fa-chart-pie text-lg"></i>
                 <span class="text-[10px] font-medium mt-0.5">Finance</span>
             </button>
-            <button id="navCardsBtn" onclick="switchTab('cards')" class="flex flex-col items-center text-gray-400 hover:text-gray-200 transition">
+            <button onclick="showToast('Cards Tab')" class="flex flex-col items-center text-gray-400 hover:text-gray-200">
                 <i class="fa-solid fa-credit-card text-lg"></i>
                 <span class="text-[10px] font-medium mt-0.5">Cards</span>
             </button>
@@ -450,7 +386,7 @@
         </div>
 
         <!-- Toast Message Box -->
-        <div id="toast" class="absolute top-6 left-1/2 -translate-x-1/2 bg-gray-900 border border-gray-700 text-white text-xs px-4 py-2.5 rounded-full shadow-2xl opacity-0 transition-all duration-300 pointer-events-none z-50 flex items-center space-x-2">
+        <div id="toast" class="absolute top-12 left-1/2 -translate-x-1/2 bg-gray-900 border border-gray-700 text-white text-xs px-4 py-2.5 rounded-full shadow-2xl opacity-0 transition-all duration-300 pointer-events-none z-50 flex items-center space-x-2">
             <i class="fa-solid fa-circle-info text-opay-green"></i>
             <span id="toastMsg">Action executed</span>
         </div>
@@ -616,61 +552,60 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        // Core State
+        // Core Credentials & State
+        const VALID_PHONE = '07073784133';
+        const VALID_PASS = '926081';
+
         let currentBalance = 2273288.00;
         let isBalanceVisible = true;
         let lastReceiptDetails = {};
-        let showingCVV = false;
 
-        // Tab Switching Logic
-        function switchTab(tabName) {
-            const homeScreen = document.getElementById('homeScreen');
-            const cardsScreen = document.getElementById('cardsScreen');
-            const navHomeBtn = document.getElementById('navHomeBtn');
-            const navCardsBtn = document.getElementById('navCardsBtn');
+        // Login Handler
+        function handleLoginSubmit(event) {
+            event.preventDefault();
+            const phoneInput = document.getElementById('loginPhone').value.trim();
+            const passInput = document.getElementById('loginPassword').value.trim();
+            const errorBox = document.getElementById('loginError');
+            const errorMsg = document.getElementById('loginErrorMsg');
+            const loginBtn = document.getElementById('loginBtn');
 
-            if (tabName === 'cards') {
-                homeScreen.classList.add('hidden');
-                cardsScreen.classList.remove('hidden');
+            // Sanitize phone input for comparison
+            const cleanedPhone = phoneInput.replace(/\s+/g, '');
 
-                navHomeBtn.className = 'flex flex-col items-center text-gray-400 hover:text-gray-200 transition';
-                navCardsBtn.className = 'flex flex-col items-center text-opay-green transition';
+            if (cleanedPhone === VALID_PHONE && passInput === VALID_PASS) {
+                errorBox.classList.add('hidden');
+                loginBtn.disabled = true;
+                loginBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-black"></i> Logging in...';
+
+                setTimeout(() => {
+                    document.getElementById('loginScreen').classList.add('hidden');
+                    document.getElementById('dashboardScreen').classList.remove('hidden');
+                    document.getElementById('dashboardSecurityBadge').classList.remove('hidden');
+                    document.getElementById('dashboardBottomNav').classList.remove('hidden');
+                    showToast('Welcome back, Lindsey Pellas');
+                }, 800);
             } else {
-                cardsScreen.classList.add('hidden');
-                homeScreen.classList.remove('hidden');
-
-                navHomeBtn.className = 'flex flex-col items-center text-opay-green transition';
-                navCardsBtn.className = 'flex flex-col items-center text-gray-400 hover:text-gray-200 transition';
+                errorBox.classList.remove('hidden');
+                if (cleanedPhone !== VALID_PHONE && passInput !== VALID_PASS) {
+                    errorMsg.textContent = 'Incorrect mobile number and password';
+                } else if (cleanedPhone !== VALID_PHONE) {
+                    errorMsg.textContent = 'Incorrect mobile number';
+                } else {
+                    errorMsg.textContent = 'Incorrect password. Try 926081';
+                }
             }
         }
 
-        // Card Type Selection
-        function selectCardType(type) {
-            const virtualBtn = document.getElementById('virtualCardTab');
-            const physicalBtn = document.getElementById('physicalCardTab');
-
-            if (type === 'virtual') {
-                virtualBtn.className = 'flex-1 py-2 text-xs font-bold rounded-lg bg-opay-green text-black transition';
-                physicalBtn.className = 'flex-1 py-2 text-xs font-bold rounded-lg text-gray-400 hover:text-white transition';
-                showToast('Virtual Card Active');
+        // Toggle Login Password Visibility
+        function togglePasswordVisibility() {
+            const passInput = document.getElementById('loginPassword');
+            const passEye = document.getElementById('loginPassEye');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                passEye.className = 'fa-solid fa-eye-slash text-sm';
             } else {
-                physicalBtn.className = 'flex-1 py-2 text-xs font-bold rounded-lg bg-opay-green text-black transition';
-                virtualBtn.className = 'flex-1 py-2 text-xs font-bold rounded-lg text-gray-400 hover:text-white transition';
-                showToast('Physical Card Selected');
-            }
-        }
-
-        // CVV Toggle Functionality
-        function toggleCardCVV() {
-            showingCVV = !showingCVV;
-            const btn = document.getElementById('cvvToggleBtn');
-            if (showingCVV) {
-                btn.textContent = 'CVV: 749';
-                btn.className = 'bg-opay-green text-black px-3 py-1.5 rounded-lg font-bold text-xs transition';
-                showToast('CVV Code Visible: 749');
-            } else {
-                btn.textContent = 'Show CVV';
-                btn.className = 'bg-opay-cardLight text-opay-green px-3 py-1.5 rounded-lg font-semibold text-xs border border-opay-green/30 hover:bg-opay-green hover:text-black transition';
+                passInput.type = 'password';
+                passEye.className = 'fa-solid fa-eye text-sm';
             }
         }
 
@@ -744,6 +679,7 @@
             const accountNo = document.getElementById('transferAccountNo').value.trim();
             const beneficiary = document.getElementById('transferBeneficiary').value.trim();
             const amountVal = parseFloat(document.getElementById('transferAmount').value);
+            const remark = document.getElementById('transferRemark').value.trim();
 
             if (!amountVal || amountVal <= 0) {
                 showToast('Please enter a valid amount');
@@ -812,7 +748,7 @@
                 // Open Receipt Modal
                 document.getElementById('receiptModal').classList.remove('hidden');
 
-            }, 1200);
+            }, 1200); // 1.2s realistic loading delay
         }
 
         // Add activity record dynamically
@@ -849,6 +785,7 @@
             if (!lastReceiptDetails.ref) return;
             const textToCopy = `OPay Transaction Receipt\nAmount: ₦${lastReceiptDetails.amount}\nTo: ${lastReceiptDetails.beneficiary}\nBank: ${lastReceiptDetails.bank}\nDate: ${lastReceiptDetails.date}\nRef: ${lastReceiptDetails.ref}`;
             
+            // Clipboard copy fallbacks
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(textToCopy);
             } else {
