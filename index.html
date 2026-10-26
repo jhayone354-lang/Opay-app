@@ -44,21 +44,6 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
-        /* Modal transitions */
-        .modal-enter {
-            transform: translateY(100%);
-            opacity: 0;
-        }
-        .modal-enter-active {
-            transform: translateY(0);
-            opacity: 1;
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .modal-exit {
-            transform: translateY(100%);
-            opacity: 0;
-            transition: all 0.25s ease-in;
-        }
     </style>
 </head>
 <body class="bg-black text-white h-full flex justify-center items-start sm:items-center sm:p-4 hide-scrollbar">
@@ -66,7 +51,7 @@
     <!-- Container / Mobile Viewport Frame -->
     <div class="w-full max-w-md bg-opay-bg min-h-screen sm:min-h-[844px] sm:h-[844px] sm:rounded-[40px] shadow-2xl overflow-hidden flex flex-col relative border border-gray-800">
         
-        <!-- Status Bar Spacer (Icons & Time Removed) -->
+        <!-- Status Bar Spacer -->
         <div class="pt-3 px-6 pb-2 shrink-0 z-30"></div>
 
         <!-- LOGIN SCREEN -->
@@ -83,9 +68,9 @@
 
                 <!-- Login Form -->
                 <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4">
-                    <!-- Error Box -->
+                    <!-- Error / Lockout Box -->
                     <div id="loginError" class="hidden bg-red-500/10 border border-red-500/30 text-red-400 text-xs p-3 rounded-xl flex items-center space-x-2">
-                        <i class="fa-solid fa-circle-exclamation"></i>
+                        <i class="fa-solid fa-circle-exclamation shrink-0"></i>
                         <span id="loginErrorMsg">Invalid mobile number or password</span>
                     </div>
 
@@ -94,7 +79,7 @@
                         <label class="block text-xs font-semibold text-gray-300 mb-1.5">Mobile Number</label>
                         <div class="relative flex items-center">
                             <span class="absolute left-3.5 text-xs font-bold text-opay-green border-r border-gray-700 pr-2.5">+234</span>
-                            <input type="tel" id="loginPhone" value="07073784133" required 
+                            <input type="tel" id="loginPhone" value="" placeholder="Enter phone number" required 
                                    class="w-full bg-opay-card border border-gray-700 rounded-xl pl-20 pr-4 py-3.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-opay-green font-mono tracking-wide">
                         </div>
                     </div>
@@ -156,16 +141,13 @@
 
                 <!-- Top Right Icons -->
                 <div class="flex items-center space-x-3">
-                    <!-- Help -->
                     <button class="relative bg-opay-card p-2.5 rounded-full text-gray-300 hover:text-white transition" title="Help">
                         <i class="fa-regular fa-headset text-base"></i>
                         <span class="absolute -top-1 -right-1 bg-red-500 text-[9px] text-white font-bold px-1 rounded-full">HELP</span>
                     </button>
-                    <!-- QR Scanner -->
                     <button class="bg-opay-card p-2.5 rounded-full text-gray-300 hover:text-white transition" title="Scan QR">
                         <i class="fa-solid fa-qrcode text-base"></i>
                     </button>
-                    <!-- Notification Bell -->
                     <button class="relative bg-opay-card p-2.5 rounded-full text-gray-300 hover:text-white transition" title="Notifications">
                         <i class="fa-regular fa-bell text-base"></i>
                         <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-opay-bg"></span>
@@ -175,7 +157,6 @@
 
             <!-- Balance Card Section -->
             <div class="mt-2 bg-gradient-to-br from-opay-green via-[#00c684] to-[#009e66] text-black rounded-2xl p-4 shadow-lg relative overflow-hidden">
-                <!-- Decorative Background Pattern -->
                 <div class="absolute -right-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
 
                 <div class="flex justify-between items-center text-xs font-medium text-black/80">
@@ -192,20 +173,17 @@
                     </button>
                 </div>
 
-                <!-- Balance Display -->
                 <div class="mt-3 flex justify-between items-center">
                     <div class="flex items-baseline space-x-1">
                         <span class="text-xl font-extrabold font-mono">₦</span>
                         <span id="displayBalance" class="text-3xl sm:text-3xl font-extrabold tracking-tight font-mono">2,273,288.00</span>
                     </div>
-                    <!-- Add Money Button -->
                     <button onclick="showToast('Add Money features available in app')" class="bg-black text-white px-4 py-2 rounded-full text-xs font-semibold flex items-center space-x-1 shadow-md hover:bg-gray-900 transition">
                         <i class="fa-solid fa-plus text-[10px] text-opay-green"></i>
                         <span>Add Money</span>
                     </button>
                 </div>
 
-                <!-- Today's Sales Sub-bar -->
                 <div class="mt-4 pt-2.5 border-t border-black/10 flex justify-between items-center text-xs text-black/80">
                     <div class="flex items-center space-x-2">
                         <i class="fa-solid fa-store"></i>
@@ -217,23 +195,18 @@
 
             <!-- Quick Action Transfers (3 Big Cards) -->
             <div class="mt-4 grid grid-cols-3 gap-3">
-                <!-- To OPay -->
                 <button onclick="openTransferModal('OPay')" class="bg-opay-card hover:bg-opay-cardLight p-3.5 rounded-2xl flex flex-col items-center text-center transition group">
                     <div class="w-12 h-12 rounded-2xl bg-opay-green/10 text-opay-green flex items-center justify-center text-xl mb-2 group-hover:scale-105 transition">
                         <i class="fa-solid fa-user-gear"></i>
                     </div>
                     <span class="text-xs font-semibold text-gray-200">To OPay</span>
                 </button>
-
-                <!-- To Bank -->
                 <button onclick="openTransferModal('Bank')" class="bg-opay-card hover:bg-opay-cardLight p-3.5 rounded-2xl flex flex-col items-center text-center transition group">
                     <div class="w-12 h-12 rounded-2xl bg-opay-green/10 text-opay-green flex items-center justify-center text-xl mb-2 group-hover:scale-105 transition">
                         <i class="fa-solid fa-building-columns"></i>
                     </div>
                     <span class="text-xs font-semibold text-gray-200">To Bank</span>
                 </button>
-
-                <!-- Withdraw -->
                 <button onclick="showToast('Withdrawal terminal ready')" class="bg-opay-card hover:bg-opay-cardLight p-3.5 rounded-2xl flex flex-col items-center text-center transition group">
                     <div class="w-12 h-12 rounded-2xl bg-opay-green/10 text-opay-green flex items-center justify-center text-xl mb-2 group-hover:scale-105 transition">
                         <i class="fa-solid fa-money-bill-transfer"></i>
@@ -242,66 +215,51 @@
                 </button>
             </div>
 
-            <!-- Main Services Grid (8 Cards) -->
+            <!-- Main Services Grid -->
             <div class="mt-4 bg-opay-card rounded-2xl p-4">
                 <div class="grid grid-cols-4 gap-y-5 gap-x-2">
-                    <!-- Airtime -->
                     <button onclick="showToast('Airtime Service Selected')" class="flex flex-col items-center group">
                         <div class="w-11 h-11 rounded-full bg-opay-cardLight flex items-center justify-center text-gray-200 text-lg mb-1 group-hover:text-opay-green transition">
                             <i class="fa-solid fa-mobile-screen-button"></i>
                         </div>
                         <span class="text-[11px] font-medium text-gray-300">Airtime</span>
                     </button>
-
-                    <!-- Data -->
                     <button onclick="showToast('Data Service Selected')" class="flex flex-col items-center group">
                         <div class="w-11 h-11 rounded-full bg-opay-cardLight flex items-center justify-center text-gray-200 text-lg mb-1 group-hover:text-opay-green transition">
                             <i class="fa-solid fa-wifi"></i>
                         </div>
                         <span class="text-[11px] font-medium text-gray-300">Data</span>
                     </button>
-
-                    <!-- Betting -->
                     <button onclick="showToast('Betting Services')" class="flex flex-col items-center group">
                         <div class="w-11 h-11 rounded-full bg-opay-cardLight flex items-center justify-center text-gray-200 text-lg mb-1 group-hover:text-opay-green transition">
                             <i class="fa-solid fa-futbol"></i>
                         </div>
                         <span class="text-[11px] font-medium text-gray-300">Betting</span>
                     </button>
-
-                    <!-- TV -->
                     <button onclick="showToast('TV Subscriptions')" class="flex flex-col items-center group">
                         <div class="w-11 h-11 rounded-full bg-opay-cardLight flex items-center justify-center text-gray-200 text-lg mb-1 group-hover:text-opay-green transition">
                             <i class="fa-solid fa-tv"></i>
                         </div>
                         <span class="text-[11px] font-medium text-gray-300">TV</span>
                     </button>
-
-                    <!-- SafeBox -->
                     <button onclick="showToast('SafeBox High Savings')" class="flex flex-col items-center group">
                         <div class="w-11 h-11 rounded-full bg-opay-cardLight flex items-center justify-center text-gray-200 text-lg mb-1 group-hover:text-opay-green transition">
                             <i class="fa-solid fa-vault"></i>
                         </div>
                         <span class="text-[11px] font-medium text-gray-300">SafeBox</span>
                     </button>
-
-                    <!-- Spend & Save -->
                     <button onclick="showToast('Spend & Save active')" class="flex flex-col items-center group">
                         <div class="w-11 h-11 rounded-full bg-opay-cardLight flex items-center justify-center text-gray-200 text-lg mb-1 group-hover:text-opay-green transition">
                             <i class="fa-solid fa-piggy-bank"></i>
                         </div>
                         <span class="text-[11px] font-medium text-gray-300">Spend & Save</span>
                     </button>
-
-                    <!-- Invitation -->
                     <button onclick="showToast('Invite Friends & Earn')" class="flex flex-col items-center group">
                         <div class="w-11 h-11 rounded-full bg-opay-cardLight flex items-center justify-center text-gray-200 text-lg mb-1 group-hover:text-opay-green transition">
                             <i class="fa-solid fa-bullhorn"></i>
                         </div>
                         <span class="text-[11px] font-medium text-gray-300">Invitation</span>
                     </button>
-
-                    <!-- More -->
                     <button onclick="showToast('More services')" class="flex flex-col items-center group">
                         <div class="w-11 h-11 rounded-full bg-opay-cardLight flex items-center justify-center text-gray-200 text-lg mb-1 group-hover:text-opay-green transition">
                             <i class="fa-solid fa-ellipsis"></i>
@@ -346,7 +304,7 @@
             </div>
         </div>
 
-        <!-- Floating Security Badge (Only visible on Dashboard) -->
+        <!-- Floating Security Badge -->
         <div id="dashboardSecurityBadge" class="hidden absolute bottom-16 right-4 z-10 pointer-events-auto">
             <button onclick="showToast('OPay Account Secured with CBN License & NDIC Insurance')" class="bg-emerald-900/90 backdrop-blur text-opay-green border border-opay-green/30 px-3 py-1.5 rounded-full shadow-lg flex items-center space-x-1.5 text-xs font-semibold animate-pulse">
                 <i class="fa-solid fa-shield-halved"></i>
@@ -354,7 +312,7 @@
             </button>
         </div>
 
-        <!-- Bottom Navigation Bar (Only visible on Dashboard) -->
+        <!-- Bottom Navigation Bar -->
         <div id="dashboardBottomNav" class="hidden absolute bottom-0 left-0 right-0 bg-opay-card border-t border-gray-800/80 px-4 py-2 flex justify-around items-center z-20">
             <button class="flex flex-col items-center text-opay-green">
                 <i class="fa-solid fa-compass text-lg"></i>
@@ -387,7 +345,6 @@
         <!-- TRANSFER MODAL -->
         <div id="transferModal" class="hidden absolute inset-0 bg-black/80 backdrop-blur-sm z-40 flex flex-col justify-end transition-opacity">
             <div class="bg-opay-bg border-t border-gray-800 rounded-t-3xl p-5 w-full max-h-[90vh] overflow-y-auto">
-                <!-- Modal Header -->
                 <div class="flex justify-between items-center pb-3 border-b border-gray-800">
                     <h3 id="transferModalTitle" class="text-base font-bold text-white flex items-center space-x-2">
                         <i class="fa-solid fa-paper-plane text-opay-green"></i>
@@ -398,9 +355,7 @@
                     </button>
                 </div>
 
-                <!-- Transfer Form -->
                 <form id="transferForm" onsubmit="handleTransferSubmit(event)" class="mt-4 space-y-4">
-                    <!-- Bank Selection -->
                     <div>
                         <label class="block text-xs font-semibold text-gray-300 mb-1">Select Bank / Destination</label>
                         <select id="transferBank" required class="w-full bg-opay-card border border-gray-700 rounded-xl px-3 py-3 text-sm text-white focus:outline-none focus:border-opay-green">
@@ -416,21 +371,18 @@
                         </select>
                     </div>
 
-                    <!-- Account Number -->
                     <div>
                         <label class="block text-xs font-semibold text-gray-300 mb-1">Account / Wallet Number</label>
                         <input type="number" id="transferAccountNo" placeholder="Enter 10-digit account number" maxlength="10" required 
                                class="w-full bg-opay-card border border-gray-700 rounded-xl px-3 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-opay-green font-mono">
                     </div>
 
-                    <!-- Beneficiary Name -->
                     <div>
                         <label class="block text-xs font-semibold text-gray-300 mb-1">Beneficiary Name</label>
                         <input type="text" id="transferBeneficiary" placeholder="e.g. Samuel Okon" required 
                                class="w-full bg-opay-card border border-gray-700 rounded-xl px-3 py-3 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-opay-green">
                     </div>
 
-                    <!-- Amount -->
                     <div>
                         <div class="flex justify-between items-center mb-1">
                             <label class="block text-xs font-semibold text-gray-300">Amount (₦)</label>
@@ -443,14 +395,12 @@
                         </div>
                     </div>
 
-                    <!-- Remark / Narration -->
                     <div>
                         <label class="block text-xs font-semibold text-gray-300 mb-1">Remark (Optional)</label>
                         <input type="text" id="transferRemark" placeholder="What is this for?" 
                                class="w-full bg-opay-card border border-gray-700 rounded-xl px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-opay-green">
                     </div>
 
-                    <!-- Confirm Button -->
                     <button type="submit" id="submitTransferBtn" class="w-full bg-opay-green hover:bg-opay-darkGreen text-black font-bold py-3.5 rounded-xl shadow-lg transition flex items-center justify-center space-x-2 mt-2">
                         <span>Confirm & Send</span>
                         <i class="fa-solid fa-arrow-right"></i>
@@ -463,7 +413,6 @@
         <div id="receiptModal" class="hidden absolute inset-0 bg-black/90 backdrop-blur-md z-50 flex flex-col justify-end overflow-y-auto">
             <div class="bg-opay-card border-t border-gray-800 rounded-t-3xl p-6 w-full min-h-[90%] flex flex-col justify-between">
                 <div>
-                    <!-- Receipt Header Icon -->
                     <div class="flex flex-col items-center text-center mt-2">
                         <div class="w-16 h-16 rounded-full bg-opay-green/20 text-opay-green flex items-center justify-center text-3xl mb-3 animate-bounce">
                             <i class="fa-solid fa-circle-check"></i>
@@ -472,51 +421,36 @@
                         <p class="text-xs text-gray-400 mt-0.5">Transaction completed securely via OPay</p>
                     </div>
 
-                    <!-- Large Receipt Amount -->
                     <div class="text-center my-6 py-4 bg-black/40 rounded-2xl border border-gray-800">
                         <span class="text-xs text-gray-400 uppercase tracking-widest block mb-1">Amount Transferred</span>
                         <span class="text-3xl font-extrabold text-white font-mono" id="rcptAmount">₦0.00</span>
                     </div>
 
-                    <!-- Receipt Details Card -->
                     <div class="space-y-3 bg-black/30 p-4 rounded-2xl border border-gray-800/80 text-xs">
-                        <!-- Beneficiary -->
                         <div class="flex justify-between items-start py-1.5 border-b border-gray-800">
                             <span class="text-gray-400">Recipient Name</span>
                             <span class="font-bold text-white text-right" id="rcptBeneficiary">-</span>
                         </div>
-
-                        <!-- Bank Name -->
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-800">
                             <span class="text-gray-400">Bank / Destination</span>
                             <span class="font-semibold text-white" id="rcptBank">-</span>
                         </div>
-
-                        <!-- Account Number -->
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-800">
                             <span class="text-gray-400">Account Number</span>
                             <span class="font-mono text-white" id="rcptAccountNo">-</span>
                         </div>
-
-                        <!-- Sender Name -->
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-800">
                             <span class="text-gray-400">Sender Name</span>
                             <span class="font-semibold text-white">Lindsey Pellas</span>
                         </div>
-
-                        <!-- Date & Time -->
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-800">
                             <span class="text-gray-400">Transaction Date</span>
                             <span class="font-mono text-gray-200" id="rcptDate">-</span>
                         </div>
-
-                        <!-- Reference / Session ID -->
                         <div class="flex justify-between items-center py-1.5 border-b border-gray-800">
                             <span class="text-gray-400">Transaction Ref</span>
                             <span class="font-mono text-opay-green text-[11px]" id="rcptRef">-</span>
                         </div>
-
-                        <!-- Status -->
                         <div class="flex justify-between items-center py-1.5">
                             <span class="text-gray-400">Status</span>
                             <span class="bg-opay-green/20 text-opay-green font-bold px-2 py-0.5 rounded-full text-[10px] flex items-center space-x-1">
@@ -527,7 +461,6 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
                 <div class="mt-6 space-y-2">
                     <button onclick="copyReceiptText()" class="w-full bg-opay-cardLight hover:bg-gray-700 text-white font-semibold py-3 rounded-xl border border-gray-700 flex items-center justify-center space-x-2 text-xs transition">
                         <i class="fa-regular fa-copy"></i>
@@ -545,27 +478,90 @@
 
     <!-- JavaScript Application Logic -->
     <script>
-        // Core Credentials & State
-        const VALID_PHONE = '07073784133';
-        const VALID_PASS = '9260';
+        // Core Credentials & Lockout State Config
+        const VALID_PHONE = '09162248342';
+        const VALID_PASS = 'Oluwajuwon@2';
+        const MAX_ATTEMPTS = 3;
+        const LOCKOUT_DURATION = 60 * 60 * 1000; // 1 Hour in milliseconds
 
         let currentBalance = 2273288.00;
         let isBalanceVisible = true;
         let lastReceiptDetails = {};
 
+        // Check Lockout Status on Page Load
+        window.addEventListener('DOMContentLoaded', () => {
+            checkLockout();
+        });
+
+        function checkLockout() {
+            const lockoutTime = localStorage.getItem('opay_lockout_until');
+            if (lockoutTime) {
+                const remaining = lockoutTime - Date.now();
+                if (remaining > 0) {
+                    lockUI(remaining);
+                } else {
+                    localStorage.removeItem('opay_lockout_until');
+                    localStorage.setItem('opay_attempts', '0');
+                }
+            }
+        }
+
+        function lockUI(durationMs) {
+            const loginBtn = document.getElementById('loginBtn');
+            const phoneInput = document.getElementById('loginPhone');
+            const passInput = document.getElementById('loginPassword');
+            const errorBox = document.getElementById('loginError');
+            const errorMsg = document.getElementById('loginErrorMsg');
+
+            loginBtn.disabled = true;
+            phoneInput.disabled = true;
+            passInput.disabled = true;
+            errorBox.classList.remove('hidden');
+
+            const interval = setInterval(() => {
+                const now = Date.now();
+                const lockoutTime = parseInt(localStorage.getItem('opay_lockout_until') || '0', 10);
+                const remaining = lockoutTime - now;
+
+                if (remaining <= 0) {
+                    clearInterval(interval);
+                    localStorage.removeItem('opay_lockout_until');
+                    localStorage.setItem('opay_attempts', '0');
+                    loginBtn.disabled = false;
+                    phoneInput.disabled = false;
+                    passInput.disabled = false;
+                    errorBox.classList.add('hidden');
+                } else {
+                    const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+                    errorMsg.textContent = `Too many incorrect attempts. Locked out for ${minutes}m ${seconds}s.`;
+                }
+            }, 1000);
+        }
+
         // Login Handler
         function handleLoginSubmit(event) {
             event.preventDefault();
+            
+            // Check lockout first
+            const lockoutTime = localStorage.getItem('opay_lockout_until');
+            if (lockoutTime && Date.now() < lockoutTime) {
+                return;
+            }
+
             const phoneInput = document.getElementById('loginPhone').value.trim();
             const passInput = document.getElementById('loginPassword').value.trim();
             const errorBox = document.getElementById('loginError');
             const errorMsg = document.getElementById('loginErrorMsg');
             const loginBtn = document.getElementById('loginBtn');
 
-            // Sanitize phone input for comparison
             const cleanedPhone = phoneInput.replace(/\s+/g, '');
 
             if (cleanedPhone === VALID_PHONE && passInput === VALID_PASS) {
+                // Reset failed attempts on success
+                localStorage.setItem('opay_attempts', '0');
+                localStorage.removeItem('opay_lockout_until');
+
                 errorBox.classList.add('hidden');
                 loginBtn.disabled = true;
                 loginBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-black"></i> Logging in...';
@@ -578,13 +574,19 @@
                     showToast('Welcome back, Lindsey Pellas');
                 }, 800);
             } else {
+                // Track failed attempts
+                let attempts = parseInt(localStorage.getItem('opay_attempts') || '0', 10) + 1;
+                localStorage.setItem('opay_attempts', attempts);
+
                 errorBox.classList.remove('hidden');
-                if (cleanedPhone !== VALID_PHONE && passInput !== VALID_PASS) {
-                    errorMsg.textContent = 'Incorrect mobile number and password';
-                } else if (cleanedPhone !== VALID_PHONE) {
-                    errorMsg.textContent = 'Incorrect mobile number';
+
+                if (attempts >= MAX_ATTEMPTS) {
+                    const lockoutUntil = Date.now() + LOCKOUT_DURATION;
+                    localStorage.setItem('opay_lockout_until', lockoutUntil);
+                    lockUI(LOCKOUT_DURATION);
                 } else {
-                    errorMsg.textContent = 'Incorrect password. Try 9260';
+                    const remainingTries = MAX_ATTEMPTS - attempts;
+                    errorMsg.textContent = `Incorrect mobile number or password. ${remainingTries} attempt(s) remaining before 1-hour lockout.`;
                 }
             }
         }
@@ -602,7 +604,7 @@
             }
         }
 
-        // Helper: Format Naira currency with commas & decimals
+        // Helper: Format Naira currency
         function formatNaira(amount) {
             return amount.toLocaleString('en-NG', {
                 minimumFractionDigits: 2,
@@ -672,7 +674,6 @@
             const accountNo = document.getElementById('transferAccountNo').value.trim();
             const beneficiary = document.getElementById('transferBeneficiary').value.trim();
             const amountVal = parseFloat(document.getElementById('transferAmount').value);
-            const remark = document.getElementById('transferRemark').value.trim();
 
             if (!amountVal || amountVal <= 0) {
                 showToast('Please enter a valid amount');
@@ -684,24 +685,19 @@
                 return;
             }
 
-            // Button loading state
             const submitBtn = document.getElementById('submitTransferBtn');
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-black"></i> Processing Transfer...';
 
             setTimeout(() => {
-                // Deduct Balance
                 currentBalance -= amountVal;
 
-                // Update Dashboard Balance Display
                 if (isBalanceVisible) {
                     document.getElementById('displayBalance').textContent = formatNaira(currentBalance);
                 }
 
-                // Append transaction to Recent Activity
                 addRecentActivity(beneficiary, amountVal);
 
-                // Generate Receipt Details
                 const now = new Date();
                 const formattedDate = now.toLocaleString('en-US', { 
                     month: 'short', 
@@ -724,7 +720,6 @@
                     ref: refNo
                 };
 
-                // Populate Receipt Modal
                 document.getElementById('rcptAmount').textContent = '₦' + formatNaira(amountVal);
                 document.getElementById('rcptBeneficiary').textContent = beneficiary;
                 document.getElementById('rcptBank').textContent = bank;
@@ -732,19 +727,15 @@
                 document.getElementById('rcptDate').textContent = formattedDate;
                 document.getElementById('rcptRef').textContent = refNo;
 
-                // Reset Form & Close Transfer Modal
                 document.getElementById('transferForm').reset();
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<span>Confirm & Send</span><i class="fa-solid fa-[#000]"></i>';
+                submitBtn.innerHTML = '<span>Confirm & Send</span><i class="fa-solid fa-arrow-right"></i>';
                 closeTransferModal();
 
-                // Open Receipt Modal
                 document.getElementById('receiptModal').classList.remove('hidden');
-
-            }, 1200); // 1.2s realistic loading delay
+            }, 1200);
         }
 
-        // Add activity record dynamically
         function addRecentActivity(beneficiary, amount) {
             const activityList = document.getElementById('recentActivityList');
             const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -767,18 +758,15 @@
             activityList.insertBefore(newItem, activityList.firstChild);
         }
 
-        // Close Receipt & Return to main screen
         function closeReceiptModal() {
             document.getElementById('receiptModal').classList.add('hidden');
             showToast('Transfer completed successfully!');
         }
 
-        // Copy receipt helper
         function copyReceiptText() {
             if (!lastReceiptDetails.ref) return;
             const textToCopy = `OPay Transaction Receipt\nAmount: ₦${lastReceiptDetails.amount}\nTo: ${lastReceiptDetails.beneficiary}\nBank: ${lastReceiptDetails.bank}\nDate: ${lastReceiptDetails.date}\nRef: ${lastReceiptDetails.ref}`;
             
-            // Clipboard copy fallbacks
             if (navigator.clipboard && window.isSecureContext) {
                 navigator.clipboard.writeText(textToCopy);
             } else {
